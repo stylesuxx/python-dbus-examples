@@ -7,7 +7,7 @@
 * Run the receiver
 
 Then you can either
-* Run the invoker, which will call the proxxied object's methods.
+* Run the invoker, which will call the proxxied receivers Test object methods.
 * run the emitter, which will emit a test signal and a quit signal.
 
 After running either of them, the receiver should be stopped.
