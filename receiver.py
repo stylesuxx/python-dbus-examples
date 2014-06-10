@@ -25,12 +25,26 @@ class Test(dbus.service.Object):
 	def fail(self):
 		raise Exception, 'FAIL!'
 
+def catchall_handler(*args, **kwargs):
+    print ("Caught signal: "
+           + kwargs['dbus_interface'] + "." + kwargs['member'])
+    for arg in args:
+        print "        " + str(arg)
+
+def quit_handler():
+	print "Quitting...."
+	loop.quit()
+
 """
 Register to dbus and run the main loop.
 Will provide the Test object via dbus.
 """
 loop = gobject.MainLoop()
 session_bus = dbus.SessionBus()
+
 bus_name = dbus.service.BusName('sub.domain.tld', bus = session_bus)
 obj = Test(bus_name, '/tld/domain/sub/test', loop)
+session_bus.add_signal_receiver(catchall_handler, interface_keyword='dbus_interface', member_keyword='member')
+session_bus.add_signal_receiver(quit_handler, dbus_interface = "tld.domain.sub.event", signal_name = "quit_signal")
+
 loop.run()
