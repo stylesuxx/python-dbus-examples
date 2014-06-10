@@ -7,14 +7,9 @@ class Emitter(dbus.service.Object):
 	def __init__(self, bus_name, object_path):
 		dbus.service.Object.__init__(self, bus_name, object_path)
 
-	@dbus.service.signal('tld.domain.sub.TestInterface.event')
+	@dbus.service.signal('tld.domain.sub.event')
 	def test(self):
 		print "Emitted a test signal"
-
-	@dbus.service.signal('tld.domain.sub.TestInterface.event')
-	def receiver_quit(self):
-		print "Emitted a receiver_quit signal"
-
 
 """
 Emit a test signal on the dbus.
@@ -24,4 +19,3 @@ session_bus = dbus.SessionBus()
 bus_name = dbus.service.BusName('sub.domain.tld', bus = session_bus)
 emitter = Emitter(bus_name, '/tld/domain/sub/event')
 emitter.test()
-emitter.receiver_quit()
