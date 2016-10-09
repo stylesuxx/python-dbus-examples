@@ -1,18 +1,25 @@
 #!/usr/bin/python
+"""Emmitter functionality."""
 import dbus
 import dbus.service
 import dbus.glib
 
+
 class Emitter(dbus.service.Object):
+    """Emitter DBUS service object."""
+
     def __init__(self, bus_name, object_path):
+        """Initialize the emitter DBUS service object."""
         dbus.service.Object.__init__(self, bus_name, object_path)
 
     @dbus.service.signal('tld.domain.sub.event')
     def test(self):
+        """Emmit a test signal."""
         print 'Emitted a test signal'
 
     @dbus.service.signal('tld.domain.sub.event')
     def quit_signal(self):
+        """Emmit a quit signal."""
         print 'Emitted a quit signal'
 
 """
