@@ -1,13 +1,32 @@
-### Simple python dbus example
+# Python DBUS examples
 
-* Run dbus monitor and grep for the interesting output:
+> A collection of python DBUS examples.
+
+## Abstract
+The first time I had to deal with python and DBUS I was overwhelmed by the lack
+of concrete examples, so this repository was born. More documentation may be found in the comments.
+
+## Usage
+In your first terminal run the **dbus monitor** and grep for the examples methods:
 
     dbus-monitor | grep /tld/domain/sub
 
-* Run the receiver
+In a second terminal run the **reciever**:
 
-Then you can either
-* Run the invoker, which will call the proxxied receivers Test object methods.
-* run the emitter, which will emit a test signal and a quit signal.
+    ./receiver.py
 
-After running either of them, the receiver should be stopped.
+The receiver has a *catch all* handler, so a lot of output is expected there.
+
+in a third terminal you can now either:
+* Run the **invoker**, which will call the proxxied receivers Test object methods:
+
+        ./invoker.py
+
+    The invoker will invoke 3 Methodes on the receiver:
+    * foo: This will simply return *Foo* as a string
+    * fail: Will trigger an exception in the receiver which the invoker can handle
+    * quit: Will stop the receiver
+
+* run the **emitter**, which will emit a test signal and a quit signal.
+
+After running either of them, the *receiver will be stopped*.
