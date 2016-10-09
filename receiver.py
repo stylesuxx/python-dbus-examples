@@ -78,6 +78,15 @@ call it exactly as defined here.
 """
 obj = Test(bus_name, '/tld/domain/sub/Test', loop)
 
+
+"""
+Attach signal handler.
+
+Signal handlers may be attached in different ways, either by interface keyword
+or DBUS interface and a signal name or member keyword.
+
+You can easily gather all information by running the DBUS monitor.
+"""
 bus.add_signal_receiver(catchall_handler,
                         interface_keyword='dbus_interface',
                         member_keyword='member')
