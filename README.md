@@ -27,6 +27,8 @@ in a third terminal you can now either:
     * fail: Will trigger an exception in the receiver which the invoker can handle
     * quit: Will stop the receiver
 
-* run the **emitter**, which will emit a test signal and a quit signal.
+* run the **emitter**, which will emit a test signal and a quit signal:
+
+        ./emitter.py
 
 After running either of them, the *receiver will be stopped*.
