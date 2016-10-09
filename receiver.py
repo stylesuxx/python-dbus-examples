@@ -32,7 +32,7 @@ class Test(dbus.service.Object):
     @dbus.service.method('tld.domain.sub.TestInterface')
     def fail(self):
         """Trigger an exception."""
-        raise Exception, 'FAIL!'
+        raise Exception('FAIL!')
 
 
 def catchall_handler(*args, **kwargs):
@@ -45,6 +45,7 @@ def catchall_handler(*args, **kwargs):
         print '* %s' % str(arg)
 
     print("\n")
+
 
 def quit_handler():
     """Quit the receiver."""
