@@ -19,14 +19,14 @@ class Test(dbus.service.Object):
     @dbus.service.method('tld.domain.sub.TestInterface')
     def foo(self):
         """Return a string."""
-        return "Foo"
+        return 'Foo'
 
     # Stop the main loop
     @dbus.service.method('tld.domain.sub.TestInterface')
     def stop(self):
         """Stop the receiver."""
         self.loop.quit()
-        return "Quit loop"
+        return 'Quit loop'
 
     # Pass an exception through dbus
     @dbus.service.method('tld.domain.sub.TestInterface')
@@ -37,15 +37,18 @@ class Test(dbus.service.Object):
 
 def catchall_handler(*args, **kwargs):
     """Catch all signals we can get."""
-    print("Caught signal: " +
-          kwargs['dbus_interface'] + "." + kwargs['member'])
-    for arg in args:
-        print "        " + str(arg)
+    print('---- Caught signal ----')
+    print('%s:%s\n' % (kwargs['dbus_interface'], kwargs['member']))
 
+    print('Arguments:')
+    for arg in args:
+        print '* %s' % str(arg)
+
+    print("\n")
 
 def quit_handler():
     """Quit the receiver."""
-    print "Quitting...."
+    print 'Quitting....'
     loop.quit()
 
 """
@@ -61,7 +64,7 @@ session_bus.add_signal_receiver(catchall_handler,
                                 interface_keyword='dbus_interface',
                                 member_keyword='member')
 session_bus.add_signal_receiver(quit_handler,
-                                dbus_interface="tld.domain.sub.event",
-                                signal_name="quit_signal")
+                                dbus_interface='tld.domain.sub.event',
+                                signal_name='quit_signal')
 
 loop.run()
