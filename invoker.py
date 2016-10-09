@@ -1,4 +1,5 @@
 #!/usr/bin/python
+"""Invoke remote methods."""
 import dbus
 
 """Proxy object from the object in receiver."""
