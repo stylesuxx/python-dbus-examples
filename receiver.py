@@ -1,9 +1,12 @@
 #!/usr/bin/python
 """Receiver related functionality."""
+import dbus
 import dbus.service
 import dbus.glib
-import gobject
-import dbus
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import GObject
 
 
 class Test(dbus.service.Object):
@@ -45,17 +48,17 @@ def catchall_handler(*args, **kwargs):
 
     print('Arguments:')
     for arg in args:
-        print '* %s' % str(arg)
+        print('* %s' % str(arg))
 
     print("\n")
 
 
 def quit_handler():
     """Signal handler for quitting the receiver."""
-    print 'Quitting....'
+    print('Quitting....')
     loop.quit()
 
-loop = gobject.MainLoop()
+loop = GObject.MainLoop()
 
 """
 First we get the bus to attach to. This may be either the session bus, of the

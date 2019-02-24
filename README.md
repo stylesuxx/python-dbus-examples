@@ -6,6 +6,14 @@
 The first time I had to deal with python and DBUS I was overwhelmed by the lack
 of concrete examples, so this repository was born. More documentation may be found in the comments.
 
+## Dependencies
+
+The following are python dependencies:
+* dbus-python
+  * relies on libdbus-1-dev
+* PyGObject
+  * relies on libgirepository1.0-dev
+
 ## Usage
 In your first terminal run the **dbus monitor** and grep for the examples methods:
 
