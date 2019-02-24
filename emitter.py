@@ -15,12 +15,12 @@ class Emitter(dbus.service.Object):
     @dbus.service.signal('tld.domain.sub.event')
     def test(self):
         """Emmit a test signal."""
-        print 'Emitted a test signal'
+        print('Emitted a test signal')
 
     @dbus.service.signal('tld.domain.sub.event')
     def quit_signal(self):
         """Emmit a quit signal."""
-        print 'Emitted a quit signal'
+        print('Emitted a quit signal')
 
 """
 Emit a test signal on the dbus.
