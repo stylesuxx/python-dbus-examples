@@ -14,6 +14,20 @@ The following are python dependencies:
 * PyGObject
   * relies on libgirepository1.0-dev
 
+On a debian based system the os dependencies can be installed like this:
+
+```
+sudo apt install libdbus-1-dev libcairo2-dev libgirepository1.0-dev cmake
+```
+
+Easiest way of installing the python dependencies is using [virtualenv](https://virtualenv.pypa.io/) and installing dependencies via pip:
+
+```
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Usage
 In your first terminal run the **dbus monitor** and grep for the examples methods:
 
