@@ -2,37 +2,40 @@
 """Receiver related functionality."""
 import dbus
 import dbus.service
-import dbus.glib
+
+from dbus.mainloop.glib import DBusGMainLoop
 
 import gi
+from gi.repository import GLib
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject
+
+name = 'sub.domain.tld'
+interface_name = 'tld.domain.sub.TestInterface'
+object_path = '/tld/domain/sub/Test'
 
 
 class Test(dbus.service.Object):
     """Reciever test class."""
-
-    loop = None
 
     def __init__(self, bus_name, object_path, loop):
         """Initialize the DBUS service object."""
         dbus.service.Object.__init__(self, bus_name, object_path)
         self.loop = loop
 
-    @dbus.service.method('tld.domain.sub.TestInterface')
+    @dbus.service.method(interface_name)
     def foo(self):
         """Return a string."""
         return 'Foo'
 
     # Stop the main loop
-    @dbus.service.method('tld.domain.sub.TestInterface')
+    @dbus.service.method(interface_name)
     def stop(self):
         """Stop the receiver."""
         self.loop.quit()
         return 'Quit loop'
 
     # Pass an exception through dbus
-    @dbus.service.method('tld.domain.sub.TestInterface')
+    @dbus.service.method(interface_name)
     def fail(self):
         """Trigger an exception."""
         raise Exception('FAIL!')
@@ -44,11 +47,11 @@ def catchall_handler(*args, **kwargs):
     Catch and print information about all singals.
     """
     print('---- Caught signal ----')
-    print('%s:%s\n' % (kwargs['dbus_interface'], kwargs['member']))
+    print(f'{kwargs["dbus_interface"]}:{kwargs["member"]}\n')
 
     print('Arguments:')
     for arg in args:
-        print('* %s' % str(arg))
+        print(f'* {arg}')
 
     print("\n")
 
@@ -58,7 +61,9 @@ def quit_handler():
     print('Quitting....')
     loop.quit()
 
-loop = GObject.MainLoop()
+
+DBusGMainLoop(set_as_default=True)
+loop = GLib.MainLoop()
 
 """
 First we get the bus to attach to. This may be either the session bus, of the
@@ -69,7 +74,7 @@ domain name.
 """
 bus = dbus.SessionBus()
 # bus = dbus.SystemBus()
-bus_name = dbus.service.BusName('sub.domain.tld', bus=bus)
+bus_name = dbus.service.BusName(name, bus=bus)
 
 """
 We initialize our service object with our name and object path. Object
@@ -79,7 +84,7 @@ and the Class name as last part.
 The object path we set here is of importance for our invoker, since it will to
 call it exactly as defined here.
 """
-obj = Test(bus_name, '/tld/domain/sub/Test', loop)
+obj = Test(bus_name, object_path, loop)
 
 
 """
